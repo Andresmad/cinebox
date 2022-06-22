@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/login-register.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script type="module" src="https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js"></script>
+        <script type="module" src="https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js"></script>
+        <script type="module" src="https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js"></script>
+        <link rel="manifest" href="json/manifest.json">
+        <script src="js/service_worker.js"></script>
+    </head>
+    
+<body>
+
+    <div style="padding: 400px 0px;">
+        <p class="login_text">Registo</p>
+        <p class="username_password_text">Email</p>
+        <center><input type="email" id="email"></center>
+        <p class="username_password_text" style="margin-top: 100px;">Password</p>
+        <center><input type="password" id="psw"></center>
+        <br><br><br><br>
+        <center><button class="button" id="submitData">Registar</button></center>
+        <br>
+        <a href="login.html"><center><p class="text">Já tem uma conta? Login</p></center></a>
+    </div>
+        
+</body>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyClIAGq3rlZRjnhC5R_0Kuj6K-DX1eTflg",
+        authDomain: "projeto-f64be.firebaseapp.com",
+        projectId: "projeto-f64be",
+        storageBucket: "projeto-f64be.appspot.com",
+        messagingSenderId: "462802744687",
+        appId: "1:462802744687:web:bcab4125664fa2635a249a"
+    };
+
+    import { 
+        getFirestore, 
+        collection,
+        getDocs
+    } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth();
+
+    //submitData é o ID do butão onde se vai guardar os dados
+    submitData.addEventListener('click', (e) => {
+
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('psw').value;
+
+    //Cria um user com email e password
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            // ...
+            alert('User created');
+        })
+        //Se der error envia um alerta com uma mensagem de erro
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+            alert(errorMessage);
+        });
+
+    })
+</script>    
+</html>

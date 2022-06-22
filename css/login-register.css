@@ -1,0 +1,66 @@
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background: linear-gradient(192.05deg, #490050 0%, rgba(19, 0, 91, 0.87) 48.64%, #0B0035 100%);
+    
+}
+
+
+.login_text{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 80px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.username_password_text{
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 45px;
+    padding: 30px 140px;
+    color: #FFFFFF;
+}
+
+
+  input[type=email] {
+    width: 80%;
+    font-size: 30px;
+    color: white;
+    border: none;
+    border-bottom: 2px solid white;
+    background-color: transparent;
+   
+  }
+
+  input[type=password] {
+    width: 80%;
+    font-size: 40px;
+    color: white;
+    border: none;
+    border-bottom: 2px solid white;
+    background-color: transparent;
+    padding: 10px;
+  }
+
+   .button {
+    width: 70%;
+    height: 120px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 45px;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    background-color: black;
+    opacity: 0.8;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.8);
+   }
+
+   .text{
+    font-family: 'Montserrat';
+    font-weight: 400;
+    color: white;
+    font-size: 30px;
+   }

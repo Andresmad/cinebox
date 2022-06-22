@@ -1,0 +1,39 @@
+{
+    "name": "Movies and Tv Shows app",
+    "short_name": "Cinebox",
+    "description": "Movie and Series management",
+    "theme_color": "#0B0035",
+    "background-color": "#fff",
+    "start_url": "http://localhost:5500/login.html",
+    "display": "standalone",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "/img/icon/logo.png",
+            "type": "image/png",
+            "sizes": "138x53"
+        },
+        {
+            "src": "/img/icon/icon1.png",
+            "type": "image/png",
+            "sizes": "100x100"
+        },
+        {
+            "src": "/img/icon/icon2.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/img/icon/icon7.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/img/icon/like.png",
+            "type": "image/png",
+            "sizes": "551x551"
+        }
+    ]
+  
+
+}

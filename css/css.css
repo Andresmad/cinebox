@@ -1,0 +1,210 @@
+body {
+    height: 844px;
+    width: 390px;
+    margin: 0;
+    background: linear-gradient(192.05deg, #490050 0%, rgba(19, 0, 91, 0.87) 48.64%, #0B0035 100%);
+    display: inline-block;
+}
+
+
+
+   .text{
+    font-family: 'Montserrat';
+    font-weight: 400;
+    color: white;
+    padding: 7px 95px;
+    
+   }
+
+  .iconify{
+    color: white;
+    width: 24px;
+    height: 24px;
+    padding: 20px;
+  }
+
+   .sidebar {
+     position: fixed;
+     top: 0;
+     left: 0;
+     height: 844px;
+     width: 10px;
+     background: #0C071B;
+     transition: all 0.8s ease;
+     border-bottom-right-radius: 10px;
+     border-top-right-radius: 10px;
+     padding: 12px;
+   }
+
+  .sidebar.active {
+    width: 240px;
+  }
+
+   .sidebar #btn{
+     position: relative;
+     color: white;
+     top: 0px;
+     font-size: 24px;
+     text-align: center;
+     line-height: 50px;
+     transform: translateX(-50%);
+     margin-left: 5px;
+
+
+   }
+
+   .sidebar.active #btn{
+     left: 90%;
+   }
+
+  .sidebar-menu {
+    display: contents;
+   }
+
+   .sidebar ul li{
+     position: relative;
+     height: 60px;
+     width: 100%;
+     margin: 10px 5px;
+     list-style: none;
+     line-height: 50px;
+     padding: revert;
+     opacity: 0;
+     transition: opacity 5s;
+   }
+
+   .sidebar ul li a{
+    display: none;
+    align-items: center;
+    text-decoration: none;
+    font-family: Montserrat;
+    color: transparent;
+    padding: 25px 5px;
+    transition: all 0.5s ease;
+  }
+
+  .sidebar.active .sidebar-menu li {
+    opacity: 1;
+  }
+
+  .sidebar.active ul li a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: Montserrat;
+    color: white;
+    padding: 25px 5px;
+    transition: all 0.5s ease;
+  }
+  
+  .list{
+    position: relative;
+    color: white;
+    font-family: Montserrat;
+    display: flex;
+    padding: 0px 40px;
+    overflow: scroll;
+  }
+
+  .secondlist{
+    position: relative;
+    color: white;
+    font-family: Montserrat;
+    display: flex;
+    padding: 0px 40px;
+    overflow: scroll;
+  }
+
+ 
+
+  .text_destaques{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 20px;
+    padding: 0px 45px;
+    color: #FFFFFF;
+  }
+
+  hr{
+    width: 100%;
+    background: white;
+  }
+
+
+  input[type=search] {
+    width: 250px;
+    font-size: 20px;
+    font-family: Montserrat;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    margin-top: 20px;
+  }
+
+  .img_style{
+    width: 150px;
+    border-radius: 15px;
+    padding: 0px 4px;
+  }
+
+  .settings_name{
+    font-family: Montserrat;
+    font-size: 18px;
+    color: #FFFFFF;
+    float: right;
+  }
+
+  .text_definicoes{
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    color: #FFFFFF;
+  }
+
+  .li_settings{
+    list-style: none;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
+  .profile{
+    height: 40%;
+    width: 100%;
+    background: #0C071B;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+
+  .circle {
+    position: relative;
+    width: 85px;
+    height: 85px;
+    border-radius: 50px;
+    background: rgb(255, 255, 255);
+  }
+
+
+.watchlist_img_style{
+    width: 110px;
+    border-radius: 15px;
+    padding: 0px 4px;
+}
+
+
+
+
+.watchlist{
+    float: left;
+    display: flex;  
+    padding: 18px;
+    flex-wrap: wrap;
+}
+
+
+  
+
+ 

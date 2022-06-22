@@ -1,0 +1,338 @@
+<html>
+  <head>
+    <title>Projeto</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="css/movie.css">
+      <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+      <link rel="manifest" href="json/manifest.json">
+      <script src="js/service_worker.js"></script>
+      
+  </head>
+ <style>
+   .slider {
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slidecontainer {
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.btn_cancel{
+  font-size: 14px;
+  border-radius: 8px;
+  border: 2px solid red;
+  background-color: transparent;
+  color: white;
+  font-family: Montserrat;
+  width: 80px;
+  height: 40px;
+}
+
+.btn_guardar{
+  font-size: 14px;
+    border-radius: 8px;
+    border: 2px solid green;
+    background-color: transparent;
+    color: white;
+    font-family: Montserrat;
+    width: 80px;
+    height: 40px;
+}
+
+.text_rate{
+  color: white;
+  font-family: Montserrat;
+  padding: 5px 0px;
+  font-size: 16px;
+}
+.list_rate{
+  padding: 11px;
+  color: white;
+  font-family: Montserrat; 
+  font-size: 12px;
+}
+
+
+
+ </style>
+<body>
+  <div id="openRate"></div>
+  <div id="listas-dialog"></div>
+     
+  <a href="index.html"><img src="icon/icon1.png" style="position: fixed; width: 20px; height: auto; padding: 20px 10px;"></a>
+  <img src="icon/icon2.png" onclick="openLikes()" id="like" style="position: fixed; width: 20px; height: auto; right: 10px; top: 15px;">
+
+  <img id="movie_backdrop_path" class="backdrop">
+    
+      
+      <div>
+        <img id="movie_poster_path" class="poster">
+        <div id="name" class="name"></div>
+        <div id="release_date" class="details_movie"></div>
+        <div id="vote_average" class="details_movie"></div>
+        <div id="language" class="details_movie"></div>
+      </div>
+    
+
+    <div style="display: flex;">
+      <p class ="text_rate">Rate :</p>
+      <p class="list_rate" id="rate"></p>
+    </div>
+
+
+      <div style="float: left; margin: 12px;">
+        <p class="storyline">Storyline</p>
+        <p id="overview" class="overview"></p>
+      </div>
+
+      
+        <div style="display: flex;padding: 10px;justify-content: space-around;">
+          <button onclick="openSelectLista()" class="button_movies">Adicionar á lista</button> 
+          <button onclick="openWatchlist()" class="button_movies">Adicionar á watchlist</button>
+          <button onclick="openRate()" class="button_movies">Rate</button>
+        </div>
+        
+        
+    
+    
+
+</body>
+<script type="module" src="js/database.js"></script>
+<script>
+
+  //Recebe os filmes da localstorage
+  let movieDocument = JSON.parse(localStorage.getItem('movieDocument'));  
+  const IMG_TV_URL = 'https://image.tmdb.org/t/p/w500/';
+
+  if (movieDocument.name) {
+    document.getElementById("name").innerHTML = movieDocument.name;
+  } else {
+    document.getElementById("name").innerHTML = movieDocument.title;
+  }
+
+  if (movieDocument.release_date) {
+    document.getElementById("release_date").innerHTML = "Release date:  " + movieDocument.release_date;
+  } else {
+    document.getElementById("release_date").innerHTML = "First air date:  " + movieDocument.first_air_date;
+  }
+
+  document.getElementById("overview").innerHTML = movieDocument.overview;
+  document.getElementById("movie_backdrop_path").src= IMG_TV_URL + movieDocument.backdrop_path;
+  document.getElementById("movie_poster_path").src= IMG_TV_URL + movieDocument.poster_path;
+  document.getElementById("vote_average").innerHTML = "Vote average:  " + movieDocument.vote_average + "%";
+  document.getElementById("language").innerHTML = "Original language:  " + movieDocument.original_language;
+
+  setRate();
+  
+  //Função responsavel por saber se o filme ja tem rate ou não
+  function setRate() {
+    let moviesRate = [];
+    if (localStorage.getItem('moviesRate')) {
+      moviesRate = JSON.parse(localStorage.getItem('moviesRate'));
+    }
+
+    for (let index = 0; index < moviesRate.length; index++) {
+      const element = moviesRate[index];
+      if (moviesRate[index].movieId == movieDocument.id) {
+        document.getElementById('rate').innerHTML = moviesRate[index].valueRate + "%";
+        break;
+      }
+    }
+  }
+
+  //Função responsavel por desenhar a div onde se pode classificar os filmes por %
+  function openRate() {
+    let div = document.getElementById('openRate');
+    div.innerHTML = '';
+    div.innerHTML += '<center><div style = "background-color: rgba(0,0,0,0.4); width: 100%; height: 100%; position: fixed; z-index: 10;">' +
+      '<div style = "width: 90%; height: 20%; background-color: #01012b; border-radius: 10px; margin-top: 450px;">' +
+      '<div style=" display: grid; padding: 10px;">' + 
+      '<input type="range" id="rangeInput" name="rangeInput" min="0" max="100" value="0" oninput="amount.value=rangeInput.value">' + 
+      '<output style="color: white;font-family: Montserrat;font-size: 18px;" id="amount" name="amount" for="rangeInput">0</output>' + 
+      '</div>' +
+      '<div style="display: flex; justify-content: space-around;padding: 0px 80px;">' +
+      '<button onclick="closeRate()" class="btn_cancel">Cancelar</button>' + 
+      '<button class="btn_guardar" onclick="addRate()">Guardar</button>' +
+      '</div>' +
+      '</div>' + 
+      '</div>' +
+      '</center>'
+  }
+
+
+  //Função responsavel por fechar a div onde se classifica os filmes 
+ function closeRate() {
+  document.getElementById('openRate').innerHTML = '';
+}   
+  
+ 
+//Função responsavel por adicionar as percentagens aos filmes 
+function addRate() {
+  let valueRate = document.getElementById("rangeInput").value;
+  document.getElementById('rate').innerHTML = valueRate + "%";
+  let div = document.getElementById('openRate').style.display = "none";
+  
+  let moviesRate = [];
+  if (localStorage.getItem('moviesRate')) {
+    moviesRate = JSON.parse(localStorage.getItem('moviesRate'));
+  }
+
+  for (let index = 0; index < moviesRate.length; index++) {
+    const element = moviesRate[index];
+    //Se o filme ja tiver rate substitui o valor pelo novo valor
+    if (moviesRate[index].movieId == movieDocument.id) {
+      moviesRate[index].valueRate = valueRate;
+      localStorage.setItem('moviesRate', JSON.stringify(moviesRate));
+      return false;
+    }
+  }
+
+  //Envia para a localstorage o id do filme e o valor do rate
+  moviesRate.push({
+    movieId: movieDocument.id,
+    valueRate: valueRate
+  });
+  localStorage.setItem('moviesRate', JSON.stringify(moviesRate));
+
+}
+
+//Função responsavel por adicionar os filmes á pagina "likes"
+async function openLikes() {
+  document.getElementById("like").src = "icon/like.png";
+
+  let likesMovies = await window.database.get("likes");
+
+  //Percorre os filmes e vê se o filme ja foi adicionado ou nao, se ja tiver sido envia um alerta dizer que ja foi adicionado
+    for (let index = 0; index < likesMovies.length; index++) {
+      const element = likesMovies[index];
+      if (element.movie.id == movieDocument.id) {
+        alert('Filme já adicionado!!');
+        return false;
+      }
+    }
+
+    //Envia para a firebase os filmes que vão ser adicionados á coleção "likes"
+    likesMovies.push(movieDocument);
+    await window.database.add("likes", movieDocument);
+    alert('Adicionado a likes!!')
+}
+
+
+function List() {
+
+  let listMovies = [];
+
+    if (localStorage.getItem('listMovies')) {
+      listMovies = JSON.parse(localStorage.getItem('listMovies'));
+    }
+
+    //Adiciona o filme ao array listMovies que esta na localstorage
+    listMovies.push(movieDocument);
+    localStorage.setItem('listMovies', JSON.stringify(listMovies));
+    alert('Adicionado à lista!!')
+}
+
+
+//Função responsavel por adicionar filmes á watchlist
+async function openWatchlist() {
+  
+    let watchlistMovies = await window.database.get("watchlist");
+  //Percorre os filmes e vê se o filme ja foi adicionado ou nao, se ja tiver sido envia um alerta dizer que ja foi adicionado
+    for (let index = 0; index < watchlistMovies.length; index++) {
+      const element = watchlistMovies[index];
+      if (element.movie.id == movieDocument.id) {
+        alert('Filme já adicionado!!');
+        return false;
+      }
+    }
+
+    //Envia para a firebase os filmes que vão ser adicionados á coleção "watchlist"
+    watchlistMovies.push(movieDocument);
+    await window.database.add("watchlist", movieDocument);
+    alert('Adicionado à watchlist!!')
+  }
+  
+  
+  function openSelectLista() {
+    let div = document.getElementById('listas-dialog');
+    div.innerHTML = '';
+    //Desenha uma div com as listas criadas la dentro
+    div.innerHTML += '<center><div style="background-color: rgba(0,0,0,0.4); width: 100%; height: 100%; position: fixed; z-index: 10;">' +
+      '<div style="width: 90%; height: 20%; background-color: #01012b; border-radius: 10px; margin-top: 450px;">' +
+      '<div style="display: grid; padding: 10px;">' + 
+      '<div style="color: white; font-family: Montserrat;" id="select-listas"></div>' +
+      '<center><button onclick="closeListsDialog()" class="btn_cancel">Cancelar</button></center>' + 
+      '</div>' +
+      '</div>' + 
+      '</div>' +
+      '</center>';
+
+    // colocar as listas dentro da div select-listas, para se conseguir selecionar a pretendida
+    let listas = [];
+
+    if (localStorage.getItem('listas')) {
+      listas = JSON.parse(localStorage.getItem('listas'));
+    }
+
+    let select = document.getElementById('select-listas');
+    select.innerHTML = '';
+    for (let index = 0; index < listas.length; index++) {
+      select.innerHTML += '<div id="select-list-item-' + index + '" data-name="' + listas[index] + '">' + 
+            '<span>' + listas[index] + '</span>' +
+            '</div>'
+      
+
+      //Detecta click no nome da lista   
+      document.getElementById("select-list-item-" + index).addEventListener('click', function() {
+        let listName = this.getAttribute('data-name');
+        addMovieToList(listName);
+      }, true);
+    }
+  }
+
+  //Função responsavel por adicionar filmes a lista pretendida
+  function addMovieToList(listName) {
+    let listsMovies = [];
+
+    if (localStorage.getItem('listsMovies')) {
+      listsMovies = JSON.parse(localStorage.getItem('listsMovies'));
+    }
+
+    movieDocument.lista = listName;
+
+    //Percorre todos os filmes que ja foram adicionados, se ja tiver sido adicinado manda um alerta 
+    for (let index = 0; index < listsMovies.length; index++) {
+      const element = listsMovies[index];
+      if (element.id == movieDocument.id && element.lista == listName) {
+        alert('Filme já adicionado!!');
+        return false;
+      }
+    }
+
+    //Senao tiver sido adicionado, adiciona o filme e recebe um alerta a dizer que o filme foi adicionado e fecha a div
+    listsMovies.push(movieDocument);
+    localStorage.setItem('listsMovies', JSON.stringify(listsMovies));
+
+    closeListsDialog();
+
+    alert('Adicionado à lista!!')
+  }
+
+  //Função responsavel por fechar a div onde se adiciona os filmes 
+  function closeListsDialog() {
+    document.getElementById('listas-dialog').innerHTML = '';
+  }
+  
+</script>
+</html>

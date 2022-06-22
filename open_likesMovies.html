@@ -1,0 +1,213 @@
+<html>
+  <head>
+    <title>Projeto</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="css/movie.css">
+      <link rel="stylesheet" href="css/css.css">
+      <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+      <link rel="manifest" href="json/manifest.json">
+      <script src="js/service_worker.js"></script>
+      
+  </head>
+ <style>
+   .slider {
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slidecontainer {
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.btn_cancel{
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  background-color: red;
+  color: white;
+  font-family: Montserrat;
+  width: 80px;
+  height: 40px;
+}
+
+.btn_guardar{
+  font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    background-color: green;
+    color: white;
+    font-family: Montserrat;
+    width: 80px;
+    height: 40px;
+}
+
+.btn_rate{
+  background: transparent;
+  border: none;
+  color: white;
+  font-family: Montserrat;
+  padding: 5px 0px;
+  font-size: 4vw;
+}
+.list_rate{
+  padding: 11px;
+  color: white;
+  font-family: Montserrat; 
+  font-size: 12px;
+}
+
+
+
+ </style>
+<body>
+  <div id="openRate"></div>
+     
+  <a href="likes.html"><img src="icon/icon1.png" style="position: fixed; width: 20px; height: auto; padding: 20px 10px;"></a>
+  <div style="position:fixed; right: 30px; top: 18px;">
+    <img src="icon/like.png" onclick="deletelikes()" id="like" style="position: fixed; width: 20px; height: auto;">
+  </div>
+  <img id="movie_backdrop_path" class="backdrop">
+    
+      
+      <div>
+        <img id="movie_poster_path" class="poster">
+        <div id="name" class="name"></div>
+        <div id="release_date" class="details_movie"></div>
+        <div id="vote_average" class="details_movie"></div>
+        <div id="language" class="details_movie"></div>
+      </div>
+    
+
+    <div style="display: flex;">
+      <p class ="btn_rate">Rate :</p>
+      <p class="list_rate" id="rate"></p>
+    </div>
+
+
+      <div style="float: left; margin: 12px;">
+        <p class="storyline">Storyline</p>
+        <p id="overview" class="overview"></p>
+      </div>
+
+      
+        <div style="display: flex;padding: 10px;justify-content: space-around;">
+          <button onclick="List()" class="button_movies">Adicionar á lista</button> 
+          <button onclick="openWatchlist()" class="button_movies">Adicionar á watchlist</button>
+          <button onclick="openRate()" id="openrate" class="button_movies">Rate</button>
+        </div>
+        
+        
+    
+    
+
+</body>
+<script type="module" src="js/database.js"></script>
+<script>
+
+
+  let movieDocument = JSON.parse(localStorage.getItem('movieDocument'));  
+  const IMG_TV_URL = 'https://image.tmdb.org/t/p/w500/';
+
+  if (movieDocument.movie.name) {
+    document.getElementById("name").innerHTML = movieDocument.movie.name;
+  } else {
+    document.getElementById("name").innerHTML = movieDocument.movie.title;
+  }
+
+  if (movieDocument.movie.release_date) {
+    document.getElementById("release_date").innerHTML = "Release date:  " + movieDocument.movie.release_date;
+  } else {
+    document.getElementById("release_date").innerHTML = "First air date:  " + movieDocument.movie.first_air_date;
+  }
+
+  document.getElementById("overview").innerHTML = movieDocument.movie.overview;
+  document.getElementById("movie_backdrop_path").src= IMG_TV_URL + movieDocument.movie.backdrop_path;
+  document.getElementById("movie_poster_path").src= IMG_TV_URL + movieDocument.movie.poster_path;
+  document.getElementById("vote_average").innerHTML = "Vote average:  " + movieDocument.movie.vote_average + "%";
+  document.getElementById("language").innerHTML = "Original language:  " + movieDocument.movie.original_language;
+
+
+  
+
+  function openRate() {
+    let div = document.getElementById('openRate');
+    div.innerHTML = '';
+    div.innerHTML += '<center><div style = "background-color: rgba(0,0,0,0.4); width: 100%; height: 100%; position: fixed; z-index: 10;">' +
+      '<div style = "width: 90%; height: 20%; background-color: #01012b; border-radius: 10px; margin-top: 450px;">' +
+      '<div style=" display: grid; padding: 10px;">' + 
+      '<input type="range" id="rangeInput" name="rangeInput" min="0" max="100" value="0" oninput="amount.value=rangeInput.value">' + 
+      '<output style="color: white;font-family: Montserrat;font-size: 18px;" id="amount" name="amount" for="rangeInput">0</output>' + 
+      '</div>' +
+      '<div style="display: flex; justify-content: space-around;padding: 0px 80px;">' +
+      '<button onclick="closeRate()" class="btn_cancel">Cancelar</button>' + 
+      '<button class="btn_guardar" onclick="addRate()">Guardar</button>' +
+      '</div>' +
+      '</div>' + 
+      '</div>' +
+      '</center>'
+  }
+
+ function closeRate() {
+  let div = document.getElementById('openRate').style.display = "none";
+}   
+  
+ 
+    function addRate() {
+      let value_rate = document.getElementById("rangeInput").value;
+      document.getElementById('rate').innerHTML = value_rate + "%";
+      let div = document.getElementById('openRate').style.display = "none";
+
+      let addRate = JSON.parse(localStorage.getItem('addRate'));
+      let saveRate = [];
+
+
+      if (localStorage.getItem('saveRate')) {
+        saveRate = JSON.parse(localStorage.getItem('saveRate'));
+    }
+
+    saveRate.push(addRate);
+    localStorage.setItem('saveRate', JSON.stringify(saveRate));
+
+}
+
+
+
+function List() {
+
+  let listMovies = [];
+
+    if (localStorage.getItem('listMovies')) {
+      listMovies = JSON.parse(localStorage.getItem('listMovies'));
+    }
+
+    listMovies.push(movieDocument);
+    localStorage.setItem('listMovies', JSON.stringify(listMovies));
+    alert('Adicionado à lista!!')
+}
+
+
+//Função responsavel por remover os filmes dos likes
+async function deletelikes() {
+  document.getElementById("like").src = "icon/icon2.png";
+    await window.database.delete("likes", movieDocument.id);
+    alert('Removido dos likes!!')
+    window.location.href="likes.html";
+}
+
+
+
+
+    
+  
+</script>
+</html>

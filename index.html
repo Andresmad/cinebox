@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Projeto</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    <link rel="manifest" href="json/manifest.json">
+    <script src="js/service_worker.js"></script>
+    
+</head>
+
+<body onload="start()">
+  
+  <img src="img/icon/logo.png" style="padding: 20px 150px;width: 100px;height: auto;">
+  <p class="text_destaques">Destaques</p>
+  <div id="list" class="list"></div>
+  <p class="text_destaques">Séries</p>
+  <div id="secondlist" class="secondlist"></div>
+  <a href="watchlist.html"><p class="text_destaques">Watchlist</p></a>
+  <div id="thirdlist" class="list"></div>
+  <a href="likes.html"><p class="text_destaques">Likes</p></a>
+  <div id="fourthlist" class="list"></div>
+
+  <div class="sidebar">
+    <div class="logo_content">
+      <div class="logo">
+        <i onclick="sidebaractive()" class="iconify" id="btn"  data-icon="heroicons-outline:menu-alt-2"></i>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="search.html">
+            <i class="iconify" data-icon="akar-icons:search"></i>
+            <p>Pesquisar</p>
+          </a>
+        </li>
+        <li>
+          <a href="profile.html">
+            <i class="iconify" data-icon="bi:person"></i>
+            <p>Perfil</p>
+          </a>
+        </li>
+        <li>
+          <a href="list.html">
+            <i class="iconify" data-icon="fa:th-list"></i>
+            <p>Listas</p>
+          </a>
+        </li>
+        <li>
+          <a href="likes.html">
+            <i class="iconify" data-icon="ant-design:heart-outlined"></i>
+            <p>Likes</p>
+          </a>
+        </li>
+        <li>
+          <a href="watchlist.html">
+            <i class="iconify" data-icon="bi:clock"></i>
+            <p>Watchlist</p>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html">
+            <i class="iconify" data-icon="carbon:settings"></i>
+            <p>Definições</p>
+          </a>
+        </li>
+        <li>
+          <a>
+            <i class="iconify" id="submitData" data-icon="ant-design:logout-outlined"></i>
+            <p>Logout</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+
+ 
+
+</body>
+
+
+
+<script type="module" src="js/database.js"></script>
+<script src="js/index.js"></script>
+<script type="module">
+
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyClIAGq3rlZRjnhC5R_0Kuj6K-DX1eTflg",
+    authDomain: "projeto-f64be.firebaseapp.com",
+    projectId: "projeto-f64be",
+    storageBucket: "projeto-f64be.appspot.com",
+    messagingSenderId: "462802744687",
+    appId: "1:462802744687:web:bcab4125664fa2635a249a"
+};
+
+import { 
+    getFirestore, 
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    addDoc,
+    setDoc,
+    deleteDoc,
+    updateDoc,
+    deleteField,
+    query,
+    where,
+    limit,
+    orderBy,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut  } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth();
+
+//signout da app
+submitData.addEventListener('click', (e) => {
+  signOut(auth).then(() => {
+  // Sign-out successful.
+}).catch((error) => {
+  // An error happened.
+});
+window.location.href="login.html";
+})
+
+const IMG_TV_URL = 'https://image.tmdb.org/t/p/w500/';
+
+setTimeout(function() {
+  drawWatchList();
+  drawlikesList();
+}, 100)
+
+//desenha uma lista com os filmes que estão dentro da watchlist
+async function drawWatchList() {
+    let watchlistMovies = await window.database.get("watchlist");
+    let div = document.getElementById('thirdlist');
+    div.innerHTML = '';
+    for (let index = 0; index < watchlistMovies.length; index++) {
+        div.innerHTML += '<div id="watchlist-movie-item-' + index + '" data-id="' + watchlistMovies[index].id + '" style="position: relative">' + 
+            '<img src="icon/icon7.png" style="position: absolute; width: 22px; height: auto; bottom: 10px; right: 10px;">' +
+            '<img class="movie img_style" src="' + IMG_TV_URL + watchlistMovies[index].movie.poster_path +  '" />' + 
+            '</div>';
+    }
+}
+
+//desenha uma lista com os filmes que estão dentro dos likes
+async function drawlikesList() {
+    let likesMovies = await window.database.get("likes");
+    let div = document.getElementById('fourthlist');
+    div.innerHTML = '';
+    for (let index = 0; index < likesMovies.length; index++) {
+        div.innerHTML += '<div id="likes-movie-item-' + index + '" data-id="' + likesMovies[index].id + '" style="position: relative">' + 
+            '<img src="icon/like.png" style="position: absolute; width: 22px; height: auto; bottom: 10px; right: 10px;">' +
+            '<img class="movie img_style" src="' + IMG_TV_URL + likesMovies[index].movie.poster_path +  '" />' + 
+            '</div>';
+    }
+  }
+
+
+</script>
+</html>
