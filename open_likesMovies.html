@@ -198,7 +198,7 @@ function List() {
 
 //Função responsavel por remover os filmes dos likes
 async function deletelikes() {
-  document.getElementById("like").src = "icon/icon2.png";
+  document.getElementById("like").src = "img/icon/icon2.png";
     await window.database.delete("likes", movieDocument.id);
     alert('Removido dos likes!!')
     window.location.href="likes.html";
