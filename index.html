@@ -14,8 +14,9 @@
 </head>
 
 <body onload="start()">
-  
-  <img src="img/icon/logo.png" style="padding: 20px 150px;width: 100px;height: auto;">
+  <div style="text-align: center; margin: 10px">
+  <img src="img/icon/logo.png" style="width: 100px;height: auto;">
+  </div>
   <p class="text_destaques">Destaques</p>
   <div id="list" class="list"></div>
   <p class="text_destaques">Séries</p>
@@ -150,7 +151,7 @@ async function drawWatchList() {
     div.innerHTML = '';
     for (let index = 0; index < watchlistMovies.length; index++) {
         div.innerHTML += '<div id="watchlist-movie-item-' + index + '" data-id="' + watchlistMovies[index].id + '" style="position: relative">' + 
-            '<img src="icon/icon7.png" style="position: absolute; width: 22px; height: auto; bottom: 10px; right: 10px;">' +
+            '<img src="img/icon/icon7.png" style="position: absolute; width: 22px; height: auto; bottom: 10px; right: 10px;">' +
             '<img class="movie img_style" src="' + IMG_TV_URL + watchlistMovies[index].movie.poster_path +  '" />' + 
             '</div>';
     }
@@ -163,7 +164,7 @@ async function drawlikesList() {
     div.innerHTML = '';
     for (let index = 0; index < likesMovies.length; index++) {
         div.innerHTML += '<div id="likes-movie-item-' + index + '" data-id="' + likesMovies[index].id + '" style="position: relative">' + 
-            '<img src="icon/like.png" style="position: absolute; width: 22px; height: auto; bottom: 10px; right: 10px;">' +
+            '<img src="img/icon/like.png" style="position: absolute; width: 22px; height: auto; bottom: 10px; right: 10px;">' +
             '<img class="movie img_style" src="' + IMG_TV_URL + likesMovies[index].movie.poster_path +  '" />' + 
             '</div>';
     }

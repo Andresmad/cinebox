@@ -3,7 +3,7 @@ body {
     width: 390px;
     margin: 0;
     background: linear-gradient(192.05deg, #490050 0%, rgba(19, 0, 91, 0.87) 48.64%, #0B0035 100%);
-    display: inline-block;
+  
 }
 
 
@@ -12,7 +12,7 @@ body {
     font-family: 'Montserrat';
     font-weight: 400;
     color: white;
-    padding: 7px 95px;
+    padding-left: 80px;
     
    }
 

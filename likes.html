@@ -14,7 +14,7 @@
 </head>
 <body>
     
-    <div style="display: flex; float: left; margin: 12px"> 
+    <div style="display: flex; float: left; margin: 12px; align-items: center;"> 
         <a href="index.html"><i class="iconify" data-icon="akar-icons:arrow-left"></i></a>
         <p class="text">Likes</p>
     </div> 
@@ -38,7 +38,7 @@ async function drawList() {
     div.innerHTML = '';
     for (let index = 0; index < likesMovies.length; index++) {
         div.innerHTML += '<div id="likes-movie-item-' + index + '" data-id="' + likesMovies[index].id + '" style="position: relative">' + 
-            '<img src="icon/like.png" style="position: absolute; width: 22px; height: auto; bottom: 10px; right: 10px;">' +
+            '<img src="img/icon/like.png" style="position: absolute; width: 22px; height: auto; bottom: 10px; right: 10px;">' +
             '<img class="watchlist_img_style" src="' + IMG_TV_URL + likesMovies[index].movie.poster_path +  '" />' + 
             '</div>';
     }

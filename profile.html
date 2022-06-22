@@ -20,12 +20,16 @@
         </a>
       <p class="text">Perfil</p> 
     </div>
-    <input style="opacity: 0;width: 100%;height: 100%;position: absolute; top: 130px; left: 140px;z-index: 99;" type="file" name="file" id="file" accept="image/*" onchange="previewImage()">
-    <div style="text-align: center;padding: 100px;"><img id="preview" class="circle"></img></div>  
+    <input style="opacity: 0;width: 100%;height: 100%;position: fixed; top: 130px; left: 140px;z-index: 99;" type="file" name="file" id="file" accept="image/*" onchange="previewImage()">
+    <div style="text-align: center;padding: 100px;"><img id="preview" class="circle"></img></div>
+    <div style="display: flex; padding-left: 10px;">
+      <div style="color: white; font-family: Montserrat; font-size: 15px;">Média de estrelas</div>
+      <div style="color: white; font-family: Montserrat; font-size: 15px; padding-left: 185px;">Box</div> 
+    </div>  
     </div>
     <div id="username"></div>
 
-    <div style="color: white; font-family: Montserrat;">Favoritos</div>
+    <div style="color: white;font-family: Montserrat;padding-left: 20px;padding-top: 10px;font-size: 20px;">Favoritos</div>
     <div style="text-align: center;padding: 400px 10px;">
     <button style="width: 55%;border: none;background: #0C071B;color: white;border-radius: 15px;height: 55px;font-family: Montserrat;font-size: 15px;">Editar perfil</button>
     </div>

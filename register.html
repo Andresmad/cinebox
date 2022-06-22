@@ -10,8 +10,11 @@
     </head>
     
 <body>
-
-    <div style="padding: 400px 0px;">
+    <div style="text-align: center; padding-top: 200px">
+        <img src="img/icon/logo.png" style="width: 450px; height:auto"><br><br><br>
+        <div style="color: white;font-family: Montserrat;font-size: 55px;">Para os fãs de cinema!</div>
+    </div>
+    <div style="padding: 210px 0px;">
         <p class="login_text">Registo</p>
         <p class="username_password_text">Email</p>
         <center><input type="email" id="email"></center>
@@ -62,6 +65,7 @@
             const user = userCredential.user;
             // ...
             alert('User created');
+            window.location.href="login.html";
         })
         //Se der error envia um alerta com uma mensagem de erro
         .catch((error) => {

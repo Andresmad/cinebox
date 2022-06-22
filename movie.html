@@ -37,6 +37,7 @@
   font-family: Montserrat;
   width: 80px;
   height: 40px;
+  margin-top: 45px;
 }
 
 .btn_guardar{
@@ -67,11 +68,11 @@
 
  </style>
 <body>
+
   <div id="openRate"></div>
   <div id="listas-dialog"></div>
-     
-  <a href="index.html"><img src="icon/icon1.png" style="position: fixed; width: 20px; height: auto; padding: 20px 10px;"></a>
-  <img src="icon/icon2.png" onclick="openLikes()" id="like" style="position: fixed; width: 20px; height: auto; right: 10px; top: 15px;">
+  <a href="index.html"><img src="img/icon/icon1.png" style="position: fixed; width: 20px; height: auto; padding: 20px 10px;"></a>
+  <img src="img/icon/icon2.png" onclick="openLikes()" id="like" style="position: fixed; width: 20px; height: auto; right: 10px; top: 15px;">
 
   <img id="movie_backdrop_path" class="backdrop">
     
@@ -209,7 +210,7 @@ function addRate() {
 
 //Função responsavel por adicionar os filmes á pagina "likes"
 async function openLikes() {
-  document.getElementById("like").src = "icon/like.png";
+  document.getElementById("like").src = "img/icon/like.png";
 
   let likesMovies = await window.database.get("likes");
 
