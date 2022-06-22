@@ -3,8 +3,8 @@
     "short_name": "Cinebox",
     "description": "Movie and Series management",
     "theme_color": "#0B0035",
-    "background-color": "linear-gradient(192.05deg, #490050 0%, rgba(19, 0, 91, 0.87) 48.64%, #0B0035 100%);",
-    "start_url": "login.html",
+    "background-color": "#fff",
+    "start_url": "http://localhost:5500/login.html",
     "display": "standalone",
     "scope": "/",
     "icons": [

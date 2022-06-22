@@ -80,6 +80,12 @@
   font-size: 20px;
 }
 
+.watchlist_img_style{
+    width: 110px;
+    border-radius: 15px;
+    padding: 0px 4px;
+}
+
 </style>
 <body>
 
@@ -93,12 +99,17 @@
   <button style="background: transparent; border: none; padding-left: 110px;" id="openList" onclick="openList()"><i class="iconify" data-icon="carbon:add"></i></button>
 </div>
 
-  <div style="padding: 50px;">
+  <div style="padding: 30px;">
     <div class="list_name" id="list"></div>
   </div>
+  <div id="drawlistMovies"></div>
       
 </body>
 <script>
+
+setTimeout(function() {
+    drawlistMovies();
+}, 500)
 
   const IMG_TV_URL = 'https://image.tmdb.org/t/p/w500/';
 
@@ -136,6 +147,22 @@
         div.innerHTML += '<div>' + 
             '<span> ' + listas[index] + '</span>' +
             '</div>'
+    }
+  }
+
+  function drawlistMovies(){
+    let listsMovies = [];
+
+    if (localStorage.getItem('listsMovies')) {
+      listsMovies = JSON.parse(localStorage.getItem('listsMovies'));
+      let div = document.getElementById('listMovies');
+      div.innerHTML = '';
+      for (let index = 0; index < listsMovies.length; index++) {
+        div.innerHTML += '<div id="watchlist-movie-item-' + index + '" data-id="' + listsMovies[index].id + '" style="position: relative">' + 
+            '<img src="img/icon/icon7.png" style="position: absolute; width: 22px; height: auto; bottom: 10px; right: 10px;">' +
+            '<img class="watchlist_img_style" src="' + IMG_TV_URL + listsMovies[index].movie.poster_path +  '" />' + 
+            '</div>';
+    }
     }
   }
    

@@ -200,8 +200,10 @@ body {
 .watchlist{
     float: left;
     display: flex;  
-    padding: 18px;
+    padding-right: 70px;
+    padding-left: 10px;
     flex-wrap: wrap;
+    width: 400px;
 }
 
 
